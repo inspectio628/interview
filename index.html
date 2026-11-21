@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>각색 인터뷰와 비교 토론</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* 레이아웃: 상단 슬레이트(클래퍼보드) 헤더 + 단계 탭 + 한 칼럼 작업 영역. 교사 탭은 편집 권한자에게만. */
+:root{
+  --bg:#eceef1; --surface:#ffffff; --ink:#1b2130; --muted:#5a6375; --line:#d3d8e0;
+  --accent:#b3202b; --accent-ink:#ffffff; --tint:#f7e8e9; --slate:#1f2533; --slate-ink:#f2f3f5;
+  --ok:#1d7448; --ok-tint:#e3f2ea; --warn:#8a5d00; --warn-tint:#fbf1dc;
+  --display:"Gowun Batang","Noto Serif KR","AppleMyungjo",serif;
+  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#13161d; --surface:#1c2029; --ink:#e7e9ee; --muted:#9aa2b2; --line:#323846;
+    --accent:#e0525b; --accent-ink:#16090a; --tint:#3a1f23; --slate:#0c0e13; --slate-ink:#e7e9ee;
+    --ok:#5fc18f; --ok-tint:#173226; --warn:#e3b55a; --warn-tint:#33290f; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#13161d; --surface:#1c2029; --ink:#e7e9ee; --muted:#9aa2b2; --line:#323846;
+  --accent:#e0525b; --accent-ink:#16090a; --tint:#3a1f23; --slate:#0c0e13; --slate-ink:#e7e9ee;
+  --ok:#5fc18f; --ok-tint:#173226; --warn:#e3b55a; --warn-tint:#33290f; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.3}
+h2{font-size:1.45rem}
+h3{font-size:1.1rem}
+p{margin:0}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px}
+
+/* 슬레이트 헤더 */
+.slate{background:var(--slate);color:var(--slate-ink)}
+.stripes{height:14px;background:repeating-linear-gradient(-45deg,var(--slate-ink) 0 14px,var(--slate) 14px 28px);opacity:.9}
+.slate .wrap{padding-top:18px;padding-bottom:16px;display:grid;gap:10px}
+.slate h1{font-size:1.6rem}
+.slate-meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.85rem;color:color-mix(in srgb,var(--slate-ink) 75%,transparent)}
+.slate-meta b{font-weight:600;color:var(--slate-ink)}
+.save-state{margin-left:auto;font-variant-numeric:tabular-nums}
+
+/* 탭 */
+nav.tabs{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px}
+.tab{appearance:none;border:0;background:none;color:var(--muted);font:inherit;font-weight:500;padding:8px 12px 10px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;display:flex;gap:6px;align-items:center}
+.tab .n{font-size:.75rem;border:1px solid var(--line);border-radius:4px;padding:0 5px;font-variant-numeric:tabular-nums}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tab .dot{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.tab .dot.done{background:var(--ok)}
+.tab.teacher{margin-left:auto}
+.tab:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+main{padding:22px 0 60px}
+section.panel{display:none;gap:18px}
+section.panel.on{display:grid}
+.lede{color:var(--muted);max-width:65ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:600px){.grid2{grid-template-columns:1fr}}
+label{display:grid;gap:5px;font-weight:500;font-size:.92rem}
+label .hint{font-weight:400;color:var(--muted);font-size:.83rem}
+input[type=text],textarea,select{width:100%;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:9px 11px}
+textarea{min-height:84px;resize:vertical}
+textarea.tall{min-height:150px}
+input:disabled,textarea:disabled,select:disabled{opacity:.75;background:var(--bg)}
+
+.btn{appearance:none;font:inherit;font-weight:600;border-radius:7px;padding:9px 16px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.small{padding:5px 11px;font-size:.85rem}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.row.end{justify-content:flex-end}
+.note{font-size:.85rem;color:var(--muted)}
+.banner{border-radius:8px;padding:10px 14px;font-size:.9rem}
+.banner.warn{background:var(--warn-tint);color:var(--warn)}
+.banner.ok{background:var(--ok-tint);color:var(--ok)}
+.banner.info{background:var(--tint);color:var(--ink)}
+[hidden]{display:none !important}
+
+/* 페르소나 */
+.personas{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:640px){.personas{grid-template-columns:1fr}}
+.persona{appearance:none;text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:12px 14px;cursor:pointer;display:grid;gap:4px}
+.persona b{font-family:var(--display);font-size:1.05rem}
+.persona span{color:var(--muted);font-size:.85rem}
+.persona[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--tint)}
+.persona:disabled{cursor:default}
+
+/* 인터뷰 */
+.rec{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;letter-spacing:.04em;color:var(--accent)}
+.rec::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.chat{display:grid;gap:12px;max-height:520px;overflow-y:auto;padding:4px 2px}
+.msg{max-width:85%;padding:10px 13px;border-radius:10px;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere}
+.msg.ai{background:var(--bg);border:1px solid var(--line);justify-self:start}
+.msg.me{background:var(--tint);justify-self:end}
+.msg .who{display:block;font-size:.75rem;color:var(--muted);margin-bottom:2px;font-weight:600}
+.counter{font-variant-numeric:tabular-nums;font-size:.85rem;color:var(--muted)}
+.summary dl{margin:0;display:grid;gap:10px}
+.summary dt{font-weight:600;font-size:.85rem;color:var(--muted)}
+.summary dd{margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:1px 10px;font-size:.85rem}
+
+/* 시나리오 */
+.script{white-space:pre-wrap;font-family:var(--body);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:14px;max-height:460px;overflow-y:auto;margin:0;font-size:.92rem}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:600px){.compare-grid{grid-template-columns:1fr}}
+
+/* 토론 */
+.stance{display:flex;gap:8px}
+.stance button{flex:1}
+.stance button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+
+/* 제출 체크리스트 */
+.checklist{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.checklist li{display:flex;gap:8px;align-items:baseline}
+.checklist .mk{font-weight:700;width:1.2em;flex:none}
+.checklist .y{color:var(--ok)} .checklist .x{color:var(--accent)}
+.confirm{display:flex;gap:8px;align-items:flex-start;font-weight:400}
+
+/* 교사 */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:620px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:.8rem;color:var(--muted);font-weight:600;background:var(--bg)}
+td.num{font-variant-numeric:tabular-nums}
+tr.clickable{cursor:pointer}
+tr.clickable:hover td{background:var(--bg)}
+.pill{display:inline-block;border-radius:999px;padding:1px 9px;font-size:.78rem;font-weight:600}
+.pill.sub{background:var(--ok-tint);color:var(--ok)}
+.pill.draft{background:var(--warn-tint);color:var(--warn)}
+.steps-mini{display:flex;gap:3px}
+.steps-mini i{width:16px;height:6px;border-radius:2px;background:var(--line)}
+.steps-mini i.d{background:var(--ok)}
+.stats{display:flex;flex-wrap:wrap;gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:10px 16px;min-width:120px}
+.stat b{display:block;font-size:1.4rem;font-variant-numeric:tabular-nums;font-family:var(--display)}
+.stat span{font-size:.8rem;color:var(--muted)}
+.report{display:grid;gap:16px}
+.report h4{margin:0 0 4px;font-size:.85rem;color:var(--muted)}
+.report .txt{white-space:pre-wrap;overflow-wrap:anywhere}
+.report .block{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:10px}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto !important}}
+</style>
+</head>
+<body>
+<header class="slate">
+  <div class="stripes" aria-hidden="true"></div>
+  <div class="wrap">
+    <h1>문학과 영상 · 각색 인터뷰와 비교 토론</h1>
+    <div class="slate-meta">
+      <span>원작 <b id="m-work">미입력</b></span>
+      <span>학번 <b id="m-no">-</b></span>
+      <span>상태 <b id="m-status">작성 중</b></span>
+      <span class="save-state" id="save-state">불러오는 중…</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="활동 단계">
+  <div class="wrap" role="tablist">
+    <button class="tab" role="tab" data-tab="info" aria-selected="true"><span class="n">1</span>작품 정보<span class="dot" data-dot="info"></span></button>
+    <button class="tab" role="tab" data-tab="interview" aria-selected="false"><span class="n">2</span>AI 인터뷰<span class="dot" data-dot="interview"></span></button>
+    <button class="tab" role="tab" data-tab="compare" aria-selected="false"><span class="n">3</span>AI 각색 비교<span class="dot" data-dot="compare"></span></button>
+    <button class="tab" role="tab" data-tab="debate" aria-selected="false"><span class="n">4</span>토론·성찰<span class="dot" data-dot="debate"></span></button>
+    <button class="tab" role="tab" data-tab="submit" aria-selected="false"><span class="n">5</span>제출<span class="dot" data-dot="submit"></span></button>
+    <button class="tab teacher" role="tab" data-tab="teacher" aria-selected="false" hidden>제출 현황 (교사)</button>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div id="global-banner" class="banner warn" hidden style="margin-bottom:16px"></div>
+
+  <!-- 1. 작품 정보 -->
+  <section class="panel on" id="p-info" role="tabpanel">
+    <div>
+      <h2>내 영상 작품 소개</h2>
+      <p class="lede">AI 인터뷰어와 비교 활동은 여기 적은 내용을 바탕으로 진행돼요. 구체적으로 쓸수록 인터뷰 질문도 구체적이 됩니다. 입력 내용은 자동 저장됩니다.</p>
+    </div>
+    <div class="card">
+      <div class="grid2">
+        <label for="f-no">학번<input type="text" id="f-no" data-k="info.no" placeholder="예: 20315" inputmode="numeric"></label>
+        <label for="f-name">이름<input type="text" id="f-name" data-k="info.name" placeholder="제출 확인용"></label>
+      </div>
+      <div class="grid2">
+        <label for="f-work">원작 제목<input type="text" id="f-work" data-k="info.work" placeholder="예: 메밀꽃 필 무렵"></label>
+        <label for="f-author">작가<input type="text" id="f-author" data-k="info.author" placeholder="예: 이효석"></label>
+      </div>
+      <label for="f-genre">원작 갈래
+        <select id="f-genre" data-k="info.genre">
+          <option>소설</option><option>시</option><option>희곡</option><option>수필</option><option>시나리오</option><option>기타</option>
+        </select>
+      </label>
+      <label for="f-scene">영상으로 옮긴 장면과 범위<span class="hint">원작의 어느 부분을 몇 분 분량으로 만들었는지</span>
+        <textarea id="f-scene" data-k="info.scene" placeholder="예: 허 생원이 동이에게 성 서방네 처녀 이야기를 하는 밤길 장면, 약 4분"></textarea></label>
+      <label for="f-plot">원작 줄거리 (내 말로)<span class="hint">5~8문장. 주요 인물과 사건, 결말까지</span>
+        <textarea id="f-plot" data-k="info.plot"></textarea></label>
+      <label for="c-original">원작 원문 발췌 <span style="color:var(--accent)">(필수)</span><span class="hint">내가 영상으로 옮긴 부분의 원문을 그대로 붙여 넣으세요. AI는 원작을 기억으로 떠올리지 않고, 여기 넣은 원문과 줄거리에서만 인용하고 질문합니다.</span>
+        <textarea id="c-original" class="tall" data-k="compare.original"></textarea></label>
+      <label for="f-adapt">주요 각색 포인트<span class="hint">원작에서 바꾸거나 더하거나 뺀 것, 그리고 그 이유</span>
+        <textarea id="f-adapt" data-k="info.adapt" placeholder="예: 시대 배경을 현대 시골 장터로 옮김. 회상 장면을 흑백으로 처리함."></textarea></label>
+      <label for="f-tech">연출·촬영·편집 기법<span class="hint">쇼트, 조명, 음악, 효과음, 자막, 편집 리듬 등</span>
+        <textarea id="f-tech" data-k="info.tech" placeholder="예: 달빛 장면은 역광 실루엣, 메밀꽃은 슬로모션, 독백은 내레이션 대신 표정 클로즈업"></textarea></label>
+      <label for="f-cameo">찬조 출연<span class="hint">누가 어떤 역할로 도와주었는지 (실명 대신 관계나 역할로 써도 됩니다)</span>
+        <textarea id="f-cameo" data-k="info.cameo" placeholder="예: 동생이 어린 동이 역, 같은 반 친구가 장꾼 역"></textarea></label>
+    </div>
+    <div class="row end"><button class="btn" data-go="interview">다음: AI 인터뷰</button></div>
+  </section>
+
+  <!-- 2. AI 인터뷰 -->
+  <section class="panel" id="p-interview" role="tabpanel">
+    <div>
+      <h2>완성작 인터뷰</h2>
+      <p class="lede">인터뷰어 세 명이 차례로 질문 3개씩, 모두 9개를 묻습니다. 인터뷰어마다 맡은 주제가 달라서 같은 질문은 반복되지 않아요. AI가 원작 내용을 잘못 말하면 “원작에서는 ~입니다”라고 바로잡아 답하세요.</p>
+    </div>
+    <div class="personas" id="personas"></div>
+    <div class="card">
+      <div class="row">
+        <span class="rec" id="rec" hidden>REC</span>
+        <span class="counter" id="q-counter">질문 0 / 3</span>
+        <span style="flex:1"></span>
+        <button class="btn" id="iv-start">인터뷰 시작</button>
+        <button class="btn" id="iv-next" hidden>다음 인터뷰어</button>
+        <button class="btn ghost small" id="iv-reset" hidden>이 인터뷰 다시 하기</button>
+      </div>
+      <div class="chat" id="chat" aria-live="polite">
+        <p class="note" id="chat-empty">인터뷰어를 고른 뒤 ‘인터뷰 시작’을 누르세요. 1단계 작품 정보를 먼저 채우면 더 좋은 질문이 나옵니다.</p>
+      </div>
+      <div id="iv-input" hidden>
+        <label for="iv-answer">내 답변<textarea id="iv-answer" placeholder="구체적인 장면과 이유를 들어 답해 보세요"></textarea></label>
+        <div class="row end" style="margin-top:8px">
+          <span class="note" id="iv-status"></span>
+          <button class="btn ghost small" id="iv-stop" hidden>멈추기</button>
+          <button class="btn" id="iv-send">답변 보내기</button>
+        </div>
+      </div>
+    </div>
+    <div class="card summary" id="iv-summary-card" hidden>
+      <div class="row"><h3>인터뷰 정리</h3><span style="flex:1"></span><button class="btn small" id="iv-summarize">AI로 정리하기</button></div>
+      <p class="note">내 답변만을 근거로 정리합니다. 정리 내용이 내 생각과 다르면 아래 메모에 바로잡아 적으세요.</p>
+      <div id="iv-summary"></div>
+      <label for="iv-memo">내 메모<span class="hint">인터뷰를 하며 새로 깨달은 점, 정리에서 고칠 점</span><textarea id="iv-memo" data-k="interview.memo"></textarea></label>
+    </div>
+    <div class="row end"><button class="btn ghost" data-go="info">이전</button><button class="btn" data-go="compare">다음: AI 각색 비교</button></div>
+  </section>
+
+  <!-- 3. AI 각색 비교 -->
+  <section class="panel" id="p-compare" role="tabpanel">
+    <div>
+      <h2>AI 각색과 내 각색 비교하기</h2>
+      <p class="lede">내가 영상으로 옮긴 원작 장면을 AI에게도 시나리오로 각색하게 한 뒤, 두 각색을 나란히 놓고 비교합니다. AI는 원작 구절만 보고, 여러분의 작품 정보는 보지 않아요.</p>
+    </div>
+    <div class="card">
+      <div>
+        <h3 style="margin-bottom:6px">원작 원문 발췌</h3>
+        <pre class="script" id="c-orig-preview" style="max-height:220px"></pre>
+        <p class="note" style="margin-top:4px">1단계 작품 정보에서 고칠 수 있어요.</p>
+      </div>
+      <div class="row"><button class="btn" id="c-gen">AI에게 같은 장면 각색시키기</button><button class="btn ghost small" id="c-stop" hidden>멈추기</button><span class="note" id="c-status"></span></div>
+      <div id="c-script-wrap" hidden>
+        <h3 style="margin-bottom:8px">AI의 각색 시나리오</h3>
+        <pre class="script" id="c-script"></pre>
+      </div>
+    </div>
+    <div class="card">
+      <h3>비교 노트</h3>
+      <label for="c-mine">내 영상의 같은 장면 연출 요약<textarea id="c-mine" data-k="compare.mine" placeholder="내 영상에서는 이 장면을 어떻게 찍고 편집했는지"></textarea></label>
+      <div class="compare-grid">
+        <label for="c-same">두 각색의 공통점<textarea id="c-same" data-k="compare.same"></textarea></label>
+        <label for="c-diff">두 각색의 차이점<textarea id="c-diff" data-k="compare.diff"></textarea></label>
+        <label for="c-ours">AI 각색에 없는 내 각색만의 해석<span class="hint">경험, 감정, 장소, 찬조 출연자 등</span><textarea id="c-ours" data-k="compare.ours"></textarea></label>
+        <label for="c-learn">AI 각색에서 배울 점이나 아쉬운 점<textarea id="c-learn" data-k="compare.learn"></textarea></label>
+      </div>
+      <div class="row"><button class="btn ghost" id="c-q">내 비교에 질문 받기</button><span class="note" id="c-q-status"></span></div>
+      <div id="c-q-wrap" hidden>
+        <div class="banner info" id="c-questions" style="white-space:pre-wrap"></div>
+        <label for="c-answers" style="margin-top:10px">질문에 대한 내 생각<textarea id="c-answers" data-k="compare.answers"></textarea></label>
+      </div>
+    </div>
+    <div class="row end"><button class="btn ghost" data-go="interview">이전</button><button class="btn" data-go="debate">다음: 토론·성찰</button></div>
+  </section>
+
+  <!-- 4. 토론 -->
+  <section class="panel" id="p-debate" role="tabpanel">
+    <div>
+      <h2>토론 준비와 성찰</h2>
+      <p class="lede">비교 활동에서 얻은 생각을 바탕으로 토론에 나갈 내 입장을 정리합니다. 토론이 끝나면 아래쪽 성찰 칸을 채우세요.</p>
+    </div>
+    <div class="card">
+      <label for="d-topic">토론 논제
+        <select id="d-topic" data-k="debate.topic">
+          <option value="">논제를 고르세요</option>
+          <option>AI는 문학 작품을 영상으로 제대로 각색할 수 있다.</option>
+          <option>각색에서는 원작에 대한 충실성보다 창작자의 새로운 해석이 더 중요하다.</option>
+          <option>AI가 만든 각색 작품도 창작물로 인정해야 한다.</option>
+          <option>문학 수업의 영상 창작에 AI를 적극적으로 활용해야 한다.</option>
+          <option value="__custom">직접 입력</option>
+        </select></label>
+      <label for="d-custom" id="d-custom-wrap" hidden>논제 직접 입력<input type="text" id="d-custom" data-k="debate.custom"></label>
+      <div>
+        <div style="font-weight:500;font-size:.92rem;margin-bottom:5px">내 입장</div>
+        <div class="stance" id="stance">
+          <button class="btn ghost" data-stance="찬성" aria-pressed="false">찬성</button>
+          <button class="btn ghost" data-stance="반대" aria-pressed="false">반대</button>
+        </div>
+      </div>
+      <label for="d-claim">주장 한 문장<input type="text" id="d-claim" data-k="debate.claim"></label>
+      <div class="grid2">
+        <label for="d-r1">근거 1<span class="hint">내 영상 제작 경험에서</span><textarea id="d-r1" data-k="debate.r1"></textarea></label>
+        <label for="d-r2">근거 2<span class="hint">AI 각색 비교에서</span><textarea id="d-r2" data-k="debate.r2"></textarea></label>
+      </div>
+      <div class="row"><button class="btn ghost" id="d-counter">AI 반대 토론자에게 반론 받기</button><span class="note" id="d-status"></span></div>
+      <div id="d-counter-wrap" hidden>
+        <div class="banner info" id="d-counter-text" style="white-space:pre-wrap"></div>
+        <label for="d-rebut" style="margin-top:10px">내 재반박<textarea id="d-rebut" data-k="debate.rebut"></textarea></label>
+      </div>
+    </div>
+    <div class="card">
+      <h3>토론 후 성찰</h3>
+      <label for="d-after">토론 후 생각의 변화<span class="hint">친구의 어떤 말이 내 생각을 바꾸거나 더 단단하게 했는지</span><textarea id="d-after" data-k="debate.after"></textarea></label>
+      <label for="d-reflect">최종 성찰<span class="hint">문학을 영상으로 옮기며, 그리고 AI와 비교하며 알게 된 점</span><textarea id="d-reflect" class="tall" data-k="debate.reflect"></textarea></label>
+    </div>
+    <div class="row end"><button class="btn ghost" data-go="compare">이전</button><button class="btn" data-go="submit">다음: 제출</button></div>
+  </section>
+
+  <!-- 5. 제출 -->
+  <section class="panel" id="p-submit" role="tabpanel">
+    <div>
+      <h2>최종 제출</h2>
+      <p class="lede">아래 항목을 확인하고 제출하세요. 제출하면 선생님 화면에 바로 올라갑니다. 제출한 뒤에도 ‘제출 취소하고 수정’으로 고칠 수 있어요.</p>
+    </div>
+    <div class="banner ok" id="sub-done" hidden></div>
+    <div class="card">
+      <h3>제출 전 확인</h3>
+      <ul class="checklist" id="checklist"></ul>
+      <label class="confirm" for="s-confirm"><input type="checkbox" id="s-confirm"> 인터뷰 답변, 비교 노트, 토론 준비와 성찰은 내가 직접 생각하고 쓴 것입니다.</label>
+      <div class="row end">
+        <button class="btn ghost small" id="s-download">내 기록 내려받기 (.txt)</button>
+        <button class="btn ghost" id="s-unsubmit" hidden>제출 취소하고 수정</button>
+        <button class="btn" id="s-submit">제출하기</button>
+      </div>
+      <p class="note" id="s-msg"></p>
+    </div>
+    <div class="card">
+      <h3>미리보기</h3>
+      <div class="report" id="s-preview"></div>
+    </div>
+  </section>
+
+  <!-- 교사 -->
+  <section class="panel" id="p-teacher" role="tabpanel">
+    <div>
+      <h2>제출 현황</h2>
+      <p class="lede">학생들이 작성 중인 기록과 제출한 기록이 실시간으로 모입니다. 행을 누르면 전체 기록을 볼 수 있어요. 이 화면은 편집 권한이 있는 선생님에게만 보입니다.</p>
+    </div>
+    <div class="stats" id="t-stats"></div>
+    <div class="row">
+      <label for="t-filter" style="display:flex;gap:6px;align-items:center;font-weight:400">보기
+        <select id="t-filter" style="width:auto"><option value="all">전체</option><option value="submitted">제출 완료</option><option value="draft">작성 중</option></select></label>
+      <span style="flex:1"></span>
+      <button class="btn small" id="t-csv">전체 CSV 내려받기</button>
+    </div>
+    <p class="note" id="t-msg"></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>학번</th><th>이름</th><th>원작</th><th>진행</th><th>상태</th><th>최근 저장</th></tr></thead>
+        <tbody id="t-body"><tr><td colspan="6" class="note">불러오는 중…</td></tr></tbody>
+      </table>
+    </div>
+    <div class="card" id="t-detail" hidden>
+      <div class="row"><h3 id="t-detail-title"></h3><span style="flex:1"></span><button class="btn ghost small" id="t-copy">전체 복사</button><button class="btn ghost small" id="t-dl">.txt 내려받기</button><button class="btn ghost small" id="t-close">닫기</button></div>
+      <div class="report" id="t-report"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+"use strict";
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const Q_TOTAL = 3;
+const END_TAG = "[인터뷰 종료]";
+const ORDER = ["author","critic","reporter"];
+
+const PERSONAS = {
+  author: {name:"원작 작가", desc:"원작 해석과 각색 의도",
+    style:"이 작품을 쓴 원작 작가의 입장을 맡은 인터뷰어. 실존 작가의 실제 발언이나 사생활을 지어내지 않는다. 자기 작품이 영상으로 바뀐 것에 호기심과 약간의 경계심을 품는다.",
+    topics:"원작 해석(학생이 작품의 주제, 인물, 분위기를 어떻게 이해했는지), 각색 의도(무엇을 바꾸고 더하고 뺐는지와 그 이유), 바뀐 부분이 원작의 주제를 지키는지 또는 새롭게 해석하는지"},
+  critic: {name:"영화 평론가", desc:"매체 전환과 연출 기법",
+    style:"영화 평론가. 차분하고 분석적이며, 연출 선택의 근거와 효과를 집요하게 묻는다.",
+    topics:"매체 전환(글의 서술, 인물의 내면, 시점을 영상의 이미지, 소리, 편집으로 어떻게 옮겼는지), 특정 연출 기법(쇼트, 조명, 음악, 효과음, 편집 리듬)의 효과, 영상이라서 생긴 한계나 가능성"},
+  reporter: {name:"영화제 기자", desc:"제작 과정, 협업, 배운 점",
+    style:"청소년 영화제 취재 기자. 밝고 친근하다.",
+    topics:"제작 과정과 촬영 에피소드, 찬조 출연자와의 협업, 혼자 만들며 어려웠던 점과 해결 과정, 이 활동으로 배운 점과 다시 만든다면 바꿀 점"}
+};
+
+function blankSession(){return {messages:[],done:false};}
+function blank(){
+  return {
+    info:{no:"",name:"",work:"",author:"",genre:"소설",scene:"",plot:"",adapt:"",tech:"",cameo:""},
+    interview:{active:"author",sessions:{author:blankSession(),critic:blankSession(),reporter:blankSession()},summary:null,memo:""},
+    compare:{original:"",ai:"",mine:"",same:"",diff:"",ours:"",learn:"",questions:"",answers:""},
+    debate:{topic:"",custom:"",stance:"",claim:"",r1:"",r2:"",counterAI:"",rebut:"",after:"",reflect:""},
+    status:"draft", confirm:false, updatedAt:0, submittedAt:0
+  };
+}
+function load(src){
+  // 이전 버전(인터뷰어 1명, 질문 6개) 기록 옮기기
+  if(src && src.interview && Array.isArray(src.interview.messages) && src.interview.messages.length && !src.interview.sessions){
+    const p = PERSONAS[src.interview.persona] ? src.interview.persona : "author";
+    src.interview.sessions = {[p]:{messages:src.interview.messages,done:!!src.interview.done}};
+  }
+  const s = merge(blank(), src);
+  if(!PERSONAS[s.interview.active]) s.interview.active="author";
+  return s;
+}
+
+function merge(base, src){
+  if(!src || typeof src!=="object") return base;
+  for(const k of Object.keys(base)){
+    if(!(k in src)) continue;
+    const b = base[k], v = src[k];
+    if(b && typeof b==="object" && !Array.isArray(b) && v && typeof v==="object" && !Array.isArray(v)) base[k]=merge(b,v);
+    else if(Array.isArray(b)) base[k]=Array.isArray(v)?v.filter(m=>m&&typeof m.content==="string"&&(m.role==="user"||m.role==="assistant")):b;
+    else if(v!==undefined && v!==null) base[k]=(typeof b==="string")?String(v):v;
+  }
+  return base;
+}
+function getPath(o,p){return p.split(".").reduce((a,k)=>a==null?a:a[k],o);}
+function setPath(o,p,v){const ks=p.split(".");let a=o;for(let i=0;i<ks.length-1;i++)a=a[ks[i]];a[ks[ks.length-1]]=v;}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function clip(s,n){s=String(s||"");return s.length>n?s.slice(0,n)+"…(이하 생략)":s;}
+function fmtTime(t){if(!t)return "-";const d=new Date(t);return d.toLocaleString("ko-KR",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"});}
+
+let S = blank();
+let db=null, user=null, sample=null, downloads=null, uid=null, docRef=null, isTeacher=false, writeBlocked=false;
+const LS_BASE = "adapt-interview-draft";
+let LS_KEY = LS_BASE+":anon";
+const use = n => (window.claude && typeof window.claude.use==="function") ? window.claude.use(n).catch(()=>null) : Promise.resolve(null);
+
+/* ---------- 저장 ---------- */
+let saveTimer=null, saving=false, dirty=false;
+function setSaveState(t){$("#save-state").textContent=t;}
+function localBackup(){try{localStorage.setItem(LS_KEY,JSON.stringify(S));}catch(e){}}
+function scheduleSave(){
+  dirty=true; localBackup();
+  if(!docRef || writeBlocked){ setSaveState(docRef? "이 기기에만 임시 저장됨" : "이 기기에만 임시 저장됨"); return; }
+  setSaveState("저장 대기…");
+  clearTimeout(saveTimer); saveTimer=setTimeout(flush,1200);
+}
+async function flush(){
+  if(!docRef || writeBlocked || saving || !dirty) return;
+  saving=true; dirty=false; S.updatedAt=Date.now();
+  setSaveState("저장 중…");
+  try{
+    await docRef.set(JSON.parse(JSON.stringify(S)));
+    setSaveState("저장됨 · "+fmtTime(S.updatedAt));
+  }catch(e){
+    dirty=true;
+    if(e && e.code==="invalid_argument"){
+      writeBlocked=true;
+      showBanner("이 페이지에 기록을 저장할 권한이 없어요. 선생님께 ‘참여자(Contributor)’ 이상 권한으로 공유해 달라고 요청하세요. 지금 입력한 내용은 이 기기에만 임시로 남습니다.");
+      setSaveState("서버 저장 불가");
+    }else if(e && e.code==="quota_exceeded"){
+      setSaveState("저장 실패: 저장 공간이 가득 찼어요");
+    }else{
+      setSaveState("저장 실패 · 다음 입력 때 다시 시도");
+    }
+  }finally{
+    saving=false;
+    if(dirty && !writeBlocked){clearTimeout(saveTimer);saveTimer=setTimeout(flush,4000);}
+  }
+}
+function showBanner(t){const b=$("#global-banner");b.textContent=t;b.hidden=false;}
+
+/* ---------- 바인딩 ---------- */
+function locked(){return S.status==="submitted";}
+function bindFields(){
+  $$("[data-k]").forEach(el=>{
+    const ev = el.tagName==="SELECT" ? "change" : "input";
+    el.addEventListener(ev,()=>{
+      if(locked()) return;
+      setPath(S, el.dataset.k, el.value);
+      if(el.id==="d-topic") $("#d-custom-wrap").hidden = el.value!=="__custom";
+      updateMeta(); updateDots();
+      if(currentTab==="submit") renderSubmit();
+      scheduleSave();
+    });
+  });
+}
+function fillFields(){
+  $$("[data-k]").forEach(el=>{const v=getPath(S,el.dataset.k); el.value = v==null?"":v;});
+  $("#d-custom-wrap").hidden = S.debate.topic!=="__custom";
+  $$("#stance button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.stance===S.debate.stance)));
+  $("#s-confirm").checked = !!S.confirm;
+}
+function applyLock(){
+  const L=locked();
+  $$("main input, main textarea, main select").forEach(el=>{
+    if(el.closest("#p-teacher")) return;
+    el.disabled=L;
+  });
+  $$("#stance button").forEach(b=>b.disabled=L);
+  ["#iv-start","#iv-send","#iv-reset","#iv-summarize","#iv-next","#c-gen","#c-q","#d-counter"].forEach(s=>{const b=$(s); if(b) b.disabled = L || !sample;});
+  $("#s-submit").hidden = L; $("#s-unsubmit").hidden = !L;
+  $("#iv-reset").hidden = sess(S).messages.length===0;
+  if(!L){const nk=ORDER[ORDER.indexOf(S.interview.active)+1]; $("#iv-next").disabled=false;}
+}
+function updateMeta(){
+  $("#m-work").textContent = S.info.work ? (S.info.work + (S.info.author? " ("+S.info.author+")":"")) : "미입력";
+  $("#m-no").textContent = S.info.no || "-";
+  $("#m-status").textContent = locked() ? "제출 완료 · "+fmtTime(S.submittedAt) : "작성 중";
+}
+
+/* ---------- 진행 판정 ---------- */
+function answeredCount(se){return Math.max(0,(se.messages||[]).filter(m=>m.role==="user").length-1);}
+function totalAnswered(s){return ORDER.reduce((n,k)=>n+answeredCount(sess(s,k)),0);}
+function stepDone(s){
+  return {
+    info: !!(s.info.no.trim() && s.info.name.trim() && s.info.work.trim() && s.info.adapt.trim()),
+    interview: ORDER.every(k=>sess(s,k).done),
+    compare: !!(s.compare.ai.trim() && s.compare.diff.trim() && s.compare.ours.trim()),
+    debate: !!(s.debate.stance && s.debate.claim.trim() && s.debate.reflect.trim()),
+    submit: s.status==="submitted"
+  };
+}
+function updateDots(){const d=stepDone(S);$$("[data-dot]").forEach(el=>el.classList.toggle("done",!!d[el.dataset.dot]));}
+
+/* ---------- 탭 ---------- */
+let currentTab="info";
+function go(tab){
+  currentTab=tab;
+  $$(".tab").forEach(t=>t.setAttribute("aria-selected",String(t.dataset.tab===tab)));
+  $$("section.panel").forEach(p=>p.classList.toggle("on",p.id==="p-"+tab));
+  if(tab==="submit") renderSubmit();
+  if(tab==="compare") renderCompare();
+  if(tab==="interview") renderChat();
+  if(tab==="teacher") startTeacher();
+  window.scrollTo({top:0});
+}
+$$(".tab").forEach(t=>t.addEventListener("click",()=>go(t.dataset.tab)));
+$$("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
+
+/* ---------- AI 공통 ---------- */
+function aiErr(e){
+  const c=e&&e.code;
+  if(c==="cancelled") return "멈췄어요.";
+  if(c==="not_granted"||c==="sampling_disabled"||c==="not_declared"||c==="capability_disabled"||c==="capability_removed") return "이 화면에서는 AI를 사용할 수 없어요. AI 사용 허용 창에서 ‘허용’을 눌렀는지 확인하세요.";
+  if(c==="rate_limited") return "AI 요청이 너무 많아요. 잠시 후 다시 눌러 주세요.";
+  if(c==="session_expired") return "로그인이 만료됐어요. 다시 로그인한 뒤 시도하세요.";
+  if(c==="refused") return "AI가 이 내용에는 답하지 않았어요. 표현을 바꿔 다시 시도해 보세요.";
+  if(c==="prompt_too_large") return "입력이 너무 길어요. 원작 구절을 핵심 부분만 남겨 주세요.";
+  if(c==="invalid_json") return "정리 결과를 읽지 못했어요. 다시 눌러 주세요.";
+  return "연결에 문제가 있었어요. 다시 시도해 주세요.";
+}
+function infoBlock(){
+  const i=S.info;
+  return `- 원작: ${i.work||"(미입력)"} / 작가: ${i.author||"(미입력)"} / 갈래: ${i.genre}
+- 영상으로 옮긴 장면과 범위: ${i.scene||"(미입력)"}
+- 주요 각색 포인트: ${i.adapt||"(미입력)"}
+- 연출·촬영·편집 기법: ${i.tech||"(미입력)"}
+- 찬조 출연: ${i.cameo||"(없음/미입력)"}
+(제작 형태: 학생 개인 작품이며, 다른 사람은 찬조 출연으로 도왔다.)`;
+}
+
+/* ---------- 인터뷰 ---------- */
+function sess(s,k){return s.interview.sessions[k||s.interview.active];}
+function unlocked(s,k){const i=ORDER.indexOf(k);return ORDER.slice(0,i).every(p=>sess(s,p).done);}
+function renderPersonas(){
+  const box=$("#personas"); box.innerHTML="";
+  ORDER.forEach((k,i)=>{
+    const p=PERSONAS[k], se=sess(S,k), open=unlocked(S,k);
+    const st = se.done ? "완료" : (se.messages.length ? "진행 중" : (open ? "대기" : "앞 인터뷰를 마치면 열려요"));
+    const b=document.createElement("button");
+    b.className="persona"; b.type="button"; b.setAttribute("aria-pressed",String(S.interview.active===k));
+    b.disabled=!open;
+    b.innerHTML=`<b>${i+1}. ${esc(p.name)}</b><span>${esc(p.desc)}</span><span style="color:${se.done?"var(--ok)":"var(--muted)"};font-weight:600">${esc(st)}</span>`;
+    b.addEventListener("click",()=>{ if(!unlocked(S,k)) return; S.interview.active=k; renderPersonas(); renderChat(); });
+    box.appendChild(b);
+  });
+}
+function rules(k){
+  const p=PERSONAS[k], idx=ORDER.indexOf(k);
+  const prev=ORDER.slice(0,idx).map(q=>`[${PERSONAS[q].name} 인터뷰]\n${transcriptOf(S,q)}`).join("\n\n");
+  const excerpt=S.compare.original.trim();
+  return `당신은 고등학교 2학년 '문학과 영상' 수업에서, 학생이 문학 작품을 각색해 혼자 만든 영상 작품에 대해 인터뷰하는 인터뷰어입니다. 학생은 인터뷰어 세 명(원작 작가, 영화 평론가, 영화제 기자)에게 차례로 인터뷰를 받으며, 당신은 그중 ${idx+1}번째인 '${p.name}'입니다.
+인터뷰어 역할: ${p.style}
+당신이 맡은 주제(이 주제 안에서만 질문합니다): ${p.topics}
+
+학생 작품 정보:
+${infoBlock()}
+
+원작 줄거리(학생이 쓴 것):
+${S.info.plot.trim()||"(없음)"}
+
+원작 원문 발췌(학생이 붙여 넣은 원문. 이 인터뷰에서 원작 내용의 유일한 근거입니다):
+<<<
+${clip(excerpt,12000)||"(없음)"}
+>>>
+${prev?`\n앞 인터뷰 기록(이미 다룬 내용):\n${clip(prev,12000)}\n`:""}
+원작 내용에 관한 규칙(가장 중요):
+- 원작 문장을 따옴표로 인용할 때는 위 원문 발췌에 실제로 있는 문장을 한 글자도 바꾸지 않고 씁니다. 발췌에 없는 문장은 절대 인용하지 않습니다.
+- 원문 발췌, 줄거리, 학생 작품 정보에 없는 줄거리·인물·결말·배경·작가의 말은 당신의 기억으로 말하지 않습니다. 이 작품에 대해 알고 있다고 생각하더라도 위 자료에 없는 내용은 사실처럼 말하지 말고, 필요하면 "원작에서 ○○는 어떻게 그려지나요?"처럼 학생에게 묻습니다.
+- 학생이 원작 내용을 바로잡으면 짧게 인정하고 학생의 설명을 따릅니다.
+
+인터뷰 규칙:
+1. 한 번에 질문은 하나만, 2~4문장 이내로 짧게 합니다. 존댓말을 씁니다.
+2. 학생의 직전 답변을 한 문장으로 받아 준 뒤(과한 칭찬 금지) 꼬리 질문이나 새 질문을 합니다.
+3. 당신의 질문은 모두 ${Q_TOTAL}개입니다.
+4. 앞 인터뷰에서 이미 나온 질문이나 학생이 이미 충분히 답한 내용은 다시 묻지 않습니다. 앞 답변을 이어받아 당신의 주제 쪽으로 더 깊이 들어가는 것은 좋습니다.
+5. 답이 짧거나 모호하면 구체적인 장면이나 쇼트를 예로 들어 달라고 요청합니다.
+6. 점수를 매기거나 평가하지 않고, 정답을 알려 주거나 학생 대신 답을 만들어 주지 않습니다.
+7. 질문 앞에 번호를 붙이지 않습니다.`;
+}
+function renderChat(streamText){
+  const box=$("#chat"); box.innerHTML="";
+  const k=S.interview.active, se=sess(S), msgs=se.messages;
+  const pname=PERSONAS[k].name;
+  if(!msgs.length && streamText==null){
+    showInline("#chat", S.compare.original.trim().length<30
+      ? "먼저 1단계에서 ‘원작 원문 발췌’를 붙여 넣어 주세요. AI는 그 원문을 근거로 질문합니다."
+      : `‘${pname} 인터뷰 시작’을 누르세요.`);
+  }
+  msgs.forEach((m,i)=>{
+    if(i===0) return; // 지시문 턴은 숨김
+    addBubble(box, m.role==="assistant"?"ai":"me", m.role==="assistant"?pname:"나", m.content.replace(END_TAG,"").trim());
+  });
+  if(streamText!=null) addBubble(box,"ai",pname,streamText||"생각하는 중…");
+  box.scrollTop=box.scrollHeight;
+  const asked=msgs.filter(m=>m.role==="assistant").length;
+  const answered=answeredCount(se);
+  $("#q-counter").textContent = se.done ? `${pname} 인터뷰 완료 · 답변 ${answered}개` : `${pname} · 질문 ${Math.min(asked,Q_TOTAL)} / ${Q_TOTAL}`;
+  $("#rec").hidden = !(msgs.length && !se.done);
+  $("#iv-start").hidden = msgs.length>0;
+  $("#iv-start").textContent = `${pname} 인터뷰 시작`;
+  const nextK = ORDER[ORDER.indexOf(k)+1];
+  $("#iv-next").hidden = !(se.done && nextK);
+  if(nextK) $("#iv-next").textContent = `다음: ${PERSONAS[nextK].name} 인터뷰`;
+  $("#iv-input").hidden = !(msgs.length && !se.done);
+  $("#iv-summary-card").hidden = !ORDER.every(p=>sess(S,p).done);
+  renderSummary();
+  applyLock();
+}
+function addBubble(box,cls,who,text){
+  const d=document.createElement("div"); d.className="msg "+cls;
+  const w=document.createElement("span"); w.className="who"; w.textContent=who;
+  d.appendChild(w); d.appendChild(document.createTextNode(text)); box.appendChild(d);
+}
+function showInline(sel,t){const box=$(sel);box.innerHTML="";const p=document.createElement("p");p.className="note";p.textContent=t;box.appendChild(p);}
+let ivCtl=null;
+async function interviewTurn(){
+  if(!sample) return;
+  const k=S.interview.active, se=sess(S), msgs=se.messages;
+  const answered=answeredCount(se);
+  const send=msgs.map(m=>({role:m.role,content:m.content}));
+  if(answered>=Q_TOTAL){
+    const nextK=ORDER[ORDER.indexOf(k)+1];
+    send[send.length-1]={role:"user",content:send[send.length-1].content+`\n\n(진행 안내: 학생이 당신의 ${Q_TOTAL}번째 질문에 답했습니다. 더 질문하지 말고, 학생 답변 가운데 인상적인 점 한 가지를 짚으며 2문장으로 마무리하세요.${nextK?` 이어서 다음 인터뷰어인 ${PERSONAS[nextK].name}에게 넘긴다고 한 문장 덧붙이세요.`:""} 마지막 줄에는 ${END_TAG} 라고만 쓰세요.)`};
+  }
+  ivCtl=new AbortController();
+  $("#iv-send").disabled=true; $("#iv-stop").hidden=false; $("#iv-status").textContent="";
+  $("#iv-answer").disabled=true;
+  renderChat("");
+  try{
+    const {text}=await sample(send,{cache:false,modelTier:"default",effort:"low",signal:ivCtl.signal,onText:({text})=>{
+      const last=$("#chat").lastElementChild; if(last){last.lastChild.textContent=text.replace(END_TAG,"").trim();}
+      $("#chat").scrollTop=$("#chat").scrollHeight;
+    }});
+    msgs.push({role:"assistant",content:text});
+    if(text.includes(END_TAG) || answered>=Q_TOTAL) se.done=true;
+    scheduleSave();
+  }catch(e){
+    $("#iv-status").textContent=aiErr(e);
+  }finally{
+    ivCtl=null; $("#iv-stop").hidden=true; $("#iv-answer").disabled=locked();
+    renderPersonas(); renderChat(); updateDots();
+  }
+}
+$("#iv-start").addEventListener("click",()=>{
+  if(locked()) return;
+  if(S.compare.original.trim().length<30){$("#iv-status").textContent="";showInline("#chat","먼저 1단계에서 ‘원작 원문 발췌’를 붙여 넣어 주세요. AI는 그 원문을 근거로 질문합니다.");return;}
+  const k=S.interview.active;
+  if(!unlocked(S,k)) return;
+  sess(S).messages=[{role:"user",content:rules(k)+"\n\n이제 인터뷰어로서 짧게 인사하고 첫 질문을 해 주세요."}];
+  sess(S).done=false; S.interview.summary=null;
+  interviewTurn();
+});
+$("#iv-next").addEventListener("click",()=>{
+  const nextK=ORDER[ORDER.indexOf(S.interview.active)+1];
+  if(nextK&&unlocked(S,nextK)){S.interview.active=nextK;renderPersonas();renderChat();}
+});
+$("#iv-send").addEventListener("click",()=>{
+  const v=$("#iv-answer").value.trim();
+  if(!v||locked()) return;
+  const msgs=sess(S).messages;
+  if(!msgs.length || msgs[msgs.length-1].role!=="assistant"){ $("#iv-status").textContent="인터뷰어의 질문을 먼저 받아야 해요."; return; }
+  msgs.push({role:"user",content:v});
+  $("#iv-answer").value="";
+  scheduleSave();
+  interviewTurn();
+});
+$("#iv-answer").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){e.preventDefault();$("#iv-send").click();}});
+$("#iv-stop").addEventListener("click",()=>ivCtl&&ivCtl.abort());
+let resetArmed=false;
+$("#iv-reset").addEventListener("click",()=>{
+  if(locked()) return;
+  const k=S.interview.active, later=ORDER.slice(ORDER.indexOf(k)+1).filter(p=>sess(S,p).messages.length);
+  if(!resetArmed){resetArmed=true;$("#iv-reset").textContent=later.length?"뒤 인터뷰도 함께 지워져요. 한 번 더 누르세요":"정말 지울까요? 한 번 더 누르세요";setTimeout(()=>{resetArmed=false;$("#iv-reset").textContent="이 인터뷰 다시 하기";},4000);return;}
+  resetArmed=false;$("#iv-reset").textContent="이 인터뷰 다시 하기";
+  // 뒤 인터뷰는 이 인터뷰 기록을 근거로 질문했으므로 함께 초기화
+  ORDER.slice(ORDER.indexOf(k)).forEach(p=>{S.interview.sessions[p]=blankSession();});
+  S.interview.summary=null;
+  renderPersonas();renderChat();updateDots();scheduleSave();
+});
+function transcriptOf(s,k){
+  const pname=PERSONAS[k].name;
+  return (sess(s,k).messages||[]).slice(1).map(m=>(m.role==="assistant"?pname:"학생")+": "+m.content.replace(END_TAG,"").trim()).join("\n\n");
+}
+function transcript(s){
+  return ORDER.filter(k=>sess(s,k).messages.length).map(k=>`[${PERSONAS[k].name} 인터뷰]\n${transcriptOf(s,k)}`).join("\n\n");
+}
+function renderSummary(){
+  const box=$("#iv-summary"); const sm=S.interview.summary;
+  if(!sm){box.innerHTML="";return;}
+  const kws=(Array.isArray(sm.keywords)?sm.keywords:[]).map(k=>`<span class="chip">${esc(k)}</span>`).join("");
+  box.innerHTML=`<dl>
+    <div><dt>답변 요약</dt><dd>${esc(sm.summary)}</dd></div>
+    <div><dt>각색 의도 키워드</dt><dd class="chips">${kws||"-"}</dd></div>
+    <div><dt>잘 설명한 점</dt><dd>${esc(sm.strength)}</dd></div>
+    <div><dt>더 생각해 볼 질문</dt><dd>${esc(sm.next)}</dd></div></dl>`;
+}
+$("#iv-summarize").addEventListener("click",async()=>{
+  if(!sample||locked()) return;
+  const b=$("#iv-summarize"); b.disabled=true; b.textContent="정리하는 중…";
+  try{
+    const r=await sample.json(`다음은 고등학생이 자신이 문학 작품을 각색해 만든 영상에 대해 인터뷰어 세 명과 인터뷰한 기록이다. 학생의 답변 내용만 근거로 정리하라. 점수나 등급은 매기지 말 것. 인터뷰어의 말을 학생의 생각으로 옮기지 말 것. 원작 내용을 새로 덧붙이지 말 것.
+
+반드시 다음 형식의 JSON 하나만 답하라:
+{"summary":"세 인터뷰에 걸친 학생 답변의 핵심을 4~5문장으로", "keywords":["각색 의도를 나타내는 짧은 키워드 3~5개"], "strength":"학생이 구체적으로 잘 설명한 점 1~2문장", "next":"학생이 더 생각해 볼 만한 질문 1개"}
+
+작품: ${S.info.work} (${S.info.author})
+
+인터뷰 기록:
+${clip(transcript(S),30000)}`,{cache:false});
+    if(r&&typeof r==="object"){
+      S.interview.summary={summary:String(r.summary||""),keywords:Array.isArray(r.keywords)?r.keywords.map(String).slice(0,6):[],strength:String(r.strength||""),next:String(r.next||"")};
+      renderSummary(); scheduleSave();
+    }
+  }catch(e){ showInline("#iv-summary",aiErr(e)); }
+  finally{ b.disabled=locked(); b.textContent="AI로 정리하기"; }
+});
+
+/* ---------- 비교 ---------- */
+let cCtl=null;
+function renderCompare(){
+  $("#c-orig-preview").textContent=S.compare.original.trim()||"(1단계에서 원작 원문 발췌를 아직 넣지 않았어요)";
+  $("#c-script-wrap").hidden=!S.compare.ai;
+  $("#c-script").textContent=S.compare.ai;
+  $("#c-gen").textContent=S.compare.ai?"다시 각색시키기":"AI에게 같은 장면 각색시키기";
+  $("#c-q-wrap").hidden=!S.compare.questions;
+  $("#c-questions").textContent=S.compare.questions;
+}
+$("#c-gen").addEventListener("click",async()=>{
+  if(!sample||locked()) return;
+  const orig=S.compare.original.trim();
+  if(orig.length<30){$("#c-status").textContent="1단계 ‘원작 원문 발췌’를 조금 더 길게 붙여 넣어 주세요.";return;}
+  cCtl=new AbortController();
+  $("#c-gen").disabled=true;$("#c-stop").hidden=false;$("#c-status").textContent="AI가 각색하는 중… (30초~1분 정도 걸릴 수 있어요)";
+  $("#c-script-wrap").hidden=false;$("#c-script").textContent="생각하는 중…";
+  try{
+    const {text}=await sample(`다음은 ${S.info.author||"작가 미상"}의 ${S.info.genre} 「${S.info.work||"제목 미상"}」의 한 장면이다. 이 장면을 1~2분 분량의 단편 영상으로 찍기 위한 촬영용 시나리오로 각색하라.
+
+형식:
+- 'S#1. 장소 - 시간' 형태의 씬 머리
+- 지문: 인물의 행동, 카메라 쇼트(클로즈업, 롱 쇼트 등), 조명, 소리·음악 지시를 구체적으로
+- 대사: '인물명: 대사' 형태
+- 원작에 충실하되, 글을 영상으로 옮기기 위해 필요한 선택(내면 서술 처리, 시점, 시간 압축 등)을 분명히 할 것
+- 마지막에 '각색 메모' 제목 아래 이 각색에서 내린 주요 선택 3가지를 한 줄씩
+
+원작 장면:
+${clip(orig,12000)}
+
+주의: 위 원작 장면에 있는 내용만 바탕으로 각색하라. 이 작품에 대해 기억하는 다른 내용(위에 없는 인물, 사건, 대사)을 덧붙이지 말 것. 대사를 원작에서 가져올 때는 위 원문을 그대로 쓸 것.`,{cache:false,signal:cCtl.signal,onText:({text})=>{$("#c-script").textContent=text;}});
+    S.compare.ai=text; $("#c-status").textContent=""; scheduleSave();
+  }catch(e){
+    $("#c-status").textContent=aiErr(e);
+    $("#c-script").textContent=S.compare.ai||(e&&e.text)||"";
+    if(!S.compare.ai && !(e&&e.text)) $("#c-script-wrap").hidden=true;
+  }finally{
+    cCtl=null;$("#c-stop").hidden=true;$("#c-gen").disabled=locked();renderCompare();updateDots();
+  }
+});
+$("#c-stop").addEventListener("click",()=>cCtl&&cCtl.abort());
+$("#c-q").addEventListener("click",async()=>{
+  if(!sample||locked()) return;
+  const c=S.compare;
+  if(!(c.same.trim()||c.diff.trim()||c.ours.trim())){$("#c-q-status").textContent="비교 노트를 먼저 써 주세요.";return;}
+  const b=$("#c-q"); b.disabled=true; $("#c-q-status").textContent="질문을 만드는 중…";
+  try{
+    const {text}=await sample(`고등학생이 자기 영상 각색과 AI가 만든 각색 시나리오를 비교한 노트를 썼다. 학생이 비교를 더 깊이 생각하도록 소크라테스식 질문 2개를 만들어라.
+규칙: 각 질문은 한 문장, 존댓말, '1. ', '2. '로 시작. 평가·칭찬·정답 제시 금지. 학생 노트의 구체적인 표현을 짚어서 물을 것. 질문 외에는 아무것도 쓰지 말 것.
+
+원작: ${S.info.work}
+AI 각색 시나리오(요약 가능):
+${clip(c.ai,5000)}
+
+학생 영상의 해당 장면 연출: ${c.mine}
+공통점: ${c.same}
+차이점: ${c.diff}
+학생 각색만의 해석: ${c.ours}
+배울 점/아쉬운 점: ${c.learn}`,{cache:false,modelTier:"quick"});
+    S.compare.questions=text.trim(); $("#c-q-status").textContent=""; renderCompare(); scheduleSave();
+  }catch(e){$("#c-q-status").textContent=aiErr(e);}
+  finally{b.disabled=locked();}
+});
+
+/* ---------- 토론 ---------- */
+function topicText(s){return s.debate.topic==="__custom"?s.debate.custom:s.debate.topic;}
+$$("#stance button").forEach(b=>b.addEventListener("click",()=>{
+  if(locked()) return;
+  S.debate.stance=b.dataset.stance;
+  $$("#stance button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+  updateDots(); scheduleSave();
+}));
+function renderDebate(){
+  $("#d-counter-wrap").hidden=!S.debate.counterAI;
+  $("#d-counter-text").textContent=S.debate.counterAI;
+}
+$("#d-counter").addEventListener("click",async()=>{
+  if(!sample||locked()) return;
+  const d=S.debate;
+  if(!topicText(S)||!d.stance||!d.claim.trim()){$("#d-status").textContent="논제, 입장, 주장을 먼저 정해 주세요.";return;}
+  const b=$("#d-counter"); b.disabled=true; $("#d-status").textContent="반론을 준비하는 중…";
+  try{
+    const {text}=await sample(`당신은 고등학교 국어 수업 토론에서 학생과 반대 입장에 선 토론자다.
+논제: ${topicText(S)}
+학생 입장: ${d.stance}
+학생 주장: ${d.claim}
+근거 1(영상 제작 경험): ${d.r1}
+근거 2(AI 각색 비교): ${d.r2}
+
+학생 주장에 대한 가장 강력한 반론 하나를 3~4문장, 존댓말로 제시하라. 학생 근거의 약한 고리를 구체적으로 짚되, 결론을 강요하거나 학생을 평가하지 말 것. 마지막 문장은 학생이 답해야 할 질문으로 끝낼 것.`,{cache:false});
+    S.debate.counterAI=text.trim(); $("#d-status").textContent=""; renderDebate(); scheduleSave();
+  }catch(e){$("#d-status").textContent=aiErr(e);}
+  finally{b.disabled=locked();}
+});
+
+/* ---------- 리포트 ---------- */
+function reportSections(s){
+  const sm=s.interview.summary;
+  return [
+    ["1. 작품 정보",[["학번",s.info.no],["이름",s.info.name],["원작",`${s.info.work} / ${s.info.author} (${s.info.genre})`],["영상으로 옮긴 장면",s.info.scene],["원작 줄거리",s.info.plot],["주요 각색 포인트",s.info.adapt],["연출·촬영·편집 기법",s.info.tech],["찬조 출연",s.info.cameo]]],
+    ["2. AI 인터뷰",[...ORDER.map(k=>[PERSONAS[k].name+" 인터뷰",transcriptOf(s,k)]),["AI 정리 - 요약",sm?sm.summary:""],["AI 정리 - 키워드",sm&&sm.keywords?sm.keywords.join(", "):""],["학생 메모",s.interview.memo]]],
+    ["3. AI 각색 비교",[["원작 원문 발췌",s.compare.original],["AI 각색 시나리오",s.compare.ai],["내 영상의 연출",s.compare.mine],["공통점",s.compare.same],["차이점",s.compare.diff],["내 각색만의 해석",s.compare.ours],["배울 점/아쉬운 점",s.compare.learn],["AI 질문",s.compare.questions],["질문에 대한 내 생각",s.compare.answers]]],
+    ["4. 토론·성찰",[["논제",topicText(s)],["입장",s.debate.stance],["주장",s.debate.claim],["근거 1",s.debate.r1],["근거 2",s.debate.r2],["AI 반론",s.debate.counterAI],["재반박",s.debate.rebut],["토론 후 생각의 변화",s.debate.after],["최종 성찰",s.debate.reflect]]]
+  ];
+}
+function reportHTML(s){
+  return reportSections(s).map(([h,rows])=>`<div class="block"><h3>${esc(h)}</h3>${rows.map(([k,v])=>`<div><h4>${esc(k)}</h4><div class="txt">${v&&String(v).trim()?esc(v):'<span class="note">(비어 있음)</span>'}</div></div>`).join("")}</div>`).join("");
+}
+function reportText(s){
+  const head=`문학과 영상 · 각색 인터뷰와 비교 토론\n상태: ${s.status==="submitted"?"제출 완료 ("+fmtTime(s.submittedAt)+")":"작성 중"}\n`;
+  return head+reportSections(s).map(([h,rows])=>`\n==== ${h} ====\n`+rows.map(([k,v])=>`\n[${k}]\n${(v&&String(v).trim())||"(비어 있음)"}`).join("\n")).join("\n")+"\n";
+}
+
+/* ---------- 제출 ---------- */
+function renderSubmit(){
+  const d=stepDone(S);
+  const items=[
+    [d.info,"작품 정보: 학번, 이름, 원작 제목, 각색 포인트"],
+    [d.interview,`AI 인터뷰: 인터뷰어 3명 모두 완료 (답변 ${totalAnswered(S)} / ${Q_TOTAL*ORDER.length}개)`],
+    [d.compare,"AI 각색 비교: AI 시나리오 생성, 차이점, 내 각색만의 해석"],
+    [d.debate,"토론·성찰: 입장, 주장, 최종 성찰"]
+  ];
+  $("#checklist").innerHTML=items.map(([ok,t])=>`<li><span class="mk ${ok?"y":"x"}">${ok?"✓":"✗"}</span><span>${esc(t)}</span></li>`).join("");
+  $("#s-preview").innerHTML=reportHTML(S);
+  const done=$("#sub-done");
+  if(locked()){done.hidden=false;done.textContent=`${fmtTime(S.submittedAt)}에 제출했어요. 선생님 화면에서 확인할 수 있습니다.`;}
+  else done.hidden=true;
+  $("#s-confirm").checked=!!S.confirm;
+}
+$("#s-confirm").addEventListener("change",e=>{if(locked())return;S.confirm=e.target.checked;scheduleSave();});
+$("#s-submit").addEventListener("click",async()=>{
+  const d=stepDone(S);
+  const miss=[];
+  if(!d.info)miss.push("작품 정보");if(!d.interview)miss.push("AI 인터뷰");if(!d.compare)miss.push("AI 각색 비교");if(!d.debate)miss.push("토론·성찰");
+  if(miss.length){$("#s-msg").textContent="아직 채우지 않은 단계가 있어요: "+miss.join(", ");return;}
+  if(!S.confirm){$("#s-msg").textContent="직접 작성 확인란에 체크해 주세요.";return;}
+  if(!docRef||writeBlocked){$("#s-msg").textContent="서버에 저장할 수 없는 상태라 제출되지 않았어요. 로그인 상태와 공유 권한을 확인하고, 그동안 ‘내 기록 내려받기’로 백업해 두세요.";return;}
+  S.status="submitted"; S.submittedAt=Date.now();
+  $("#s-msg").textContent="제출하는 중…";
+  dirty=true; clearTimeout(saveTimer);
+  if(saving){await new Promise(r=>{const t=setInterval(()=>{if(!saving){clearInterval(t);r();}},150);});}
+  await flush();
+  if(dirty){S.status="draft";S.submittedAt=0;$("#s-msg").textContent="제출에 실패했어요. 잠시 후 다시 눌러 주세요.";}
+  else $("#s-msg").textContent="";
+  refreshAll();
+});
+$("#s-unsubmit").addEventListener("click",()=>{
+  S.status="draft"; S.submittedAt=0; scheduleSave(); refreshAll();
+  $("#s-msg").textContent="수정할 수 있게 열었어요. 고친 뒤 다시 제출하세요.";
+});
+async function saveTxt(name,text,msgSel){
+  if(!downloads){
+    try{await navigator.clipboard.writeText(text);$(msgSel).textContent="내려받기를 쓸 수 없어 기록을 클립보드에 복사했어요.";}
+    catch(e){$(msgSel).textContent="이 화면에서는 내려받기와 복사를 쓸 수 없어요.";}
+    return;
+  }
+  try{await downloads.save({filename:name,data:text});$(msgSel).textContent="";}
+  catch(e){$(msgSel).textContent=(e&&e.code==="declined")?"내려받기를 취소했어요.":"내려받기에 실패했어요.";}
+}
+$("#s-download").addEventListener("click",()=>saveTxt(`문학과영상_${S.info.no||"학번"}_${S.info.name||"이름"}.txt`,reportText(S),"#s-msg"));
+
+/* ---------- 교사 ---------- */
+let subs=[], teacherStarted=false, selectedId=null;
+function startTeacher(){
+  if(teacherStarted||!db) return;
+  teacherStarted=true;
+  const timer=setTimeout(()=>{$("#t-msg").textContent="제출 기록을 아직 불러오지 못했어요. 연결 상태를 확인하세요.";},10000);
+  db.collection("submissions").onSnapshot(snap=>{
+    if(!snap.metadata.fromCache){clearTimeout(timer);$("#t-msg").textContent="";}
+    subs=snap.docs.map(d=>({id:d.id,s:load(d.data())}));
+    renderTeacher();
+  },err=>{clearTimeout(timer);$("#t-msg").textContent="제출 기록을 불러오지 못했어요. 페이지를 새로 열어 주세요.";});
+}
+function renderTeacher(){
+  const f=$("#t-filter").value;
+  const total=subs.length, done=subs.filter(x=>x.s.status==="submitted").length;
+  $("#t-stats").innerHTML=`<div class="stat"><b>${total}</b><span>참여 학생</span></div><div class="stat"><b>${done}</b><span>제출 완료</span></div><div class="stat"><b>${total-done}</b><span>작성 중</span></div>`;
+  const list=subs.filter(x=>f==="all"||(f==="submitted"?x.s.status==="submitted":x.s.status!=="submitted"))
+    .sort((a,b)=>String(a.s.info.no).localeCompare(String(b.s.info.no),"ko",{numeric:true}));
+  const body=$("#t-body");
+  if(!list.length){body.innerHTML=`<tr><td colspan="6" class="note">${total?"이 조건에 맞는 기록이 없어요.":"아직 학생 기록이 없어요. 학생들이 페이지를 열고 입력을 시작하면 여기에 나타납니다."}</td></tr>`;return;}
+  body.innerHTML=list.map(x=>{
+    const s=x.s, d=stepDone(s);
+    const mini=["info","interview","compare","debate"].map(k=>`<i class="${d[k]?"d":""}" title="${k}"></i>`).join("");
+    return `<tr class="clickable" data-id="${esc(x.id)}" tabindex="0"><td class="num">${esc(s.info.no||"-")}</td><td>${esc(s.info.name||"(이름 없음)")}</td><td>${esc(s.info.work||"-")}</td><td><span class="steps-mini" aria-label="진행 단계">${mini}</span></td><td>${s.status==="submitted"?'<span class="pill sub">제출</span>':'<span class="pill draft">작성 중</span>'}</td><td class="num">${esc(fmtTime(s.status==="submitted"?s.submittedAt:s.updatedAt))}</td></tr>`;
+  }).join("");
+  $$("#t-body tr.clickable").forEach(tr=>{
+    const open=()=>openDetail(tr.dataset.id);
+    tr.addEventListener("click",open);
+    tr.addEventListener("keydown",e=>{if(e.key==="Enter")open();});
+  });
+  if(selectedId) openDetail(selectedId,true);
+}
+function openDetail(id,quiet){
+  const x=subs.find(v=>v.id===id); if(!x) return;
+  selectedId=id;
+  $("#t-detail").hidden=false;
+  $("#t-detail-title").textContent=`${x.s.info.no||"-"} ${x.s.info.name||""} · ${x.s.info.work||""}`;
+  $("#t-report").innerHTML=reportHTML(x.s);
+  if(!quiet) $("#t-detail").scrollIntoView({behavior:"smooth",block:"start"});
+}
+$("#t-filter").addEventListener("change",renderTeacher);
+$("#t-close").addEventListener("click",()=>{selectedId=null;$("#t-detail").hidden=true;});
+$("#t-copy").addEventListener("click",async()=>{
+  const x=subs.find(v=>v.id===selectedId); if(!x) return;
+  try{await navigator.clipboard.writeText(reportText(x.s));$("#t-copy").textContent="복사됨";setTimeout(()=>$("#t-copy").textContent="전체 복사",1500);}
+  catch(e){$("#t-msg").textContent="복사하지 못했어요.";}
+});
+$("#t-dl").addEventListener("click",()=>{
+  const x=subs.find(v=>v.id===selectedId); if(!x) return;
+  saveTxt(`문학과영상_${x.s.info.no||"학번"}_${x.s.info.name||"이름"}.txt`,reportText(x.s),"#t-msg");
+});
+function csvCell(v){v=String(v==null?"":v);return '"'+v.replace(/"/g,'""')+'"';}
+$("#t-csv").addEventListener("click",()=>{
+  if(!subs.length){$("#t-msg").textContent="내려받을 기록이 없어요.";return;}
+  const head=["학번","이름","원작","작가","상태","제출시각","최근저장"];
+  const rows=[];
+  const first=reportSections(blank());
+  first.forEach(([h,rs])=>rs.forEach(([k])=>{if(!["학번","이름","원작"].includes(k))head.push(h.replace(/^\d\.\s*/,"")+" - "+k);}));
+  subs.slice().sort((a,b)=>String(a.s.info.no).localeCompare(String(b.s.info.no),"ko",{numeric:true})).forEach(x=>{
+    const s=x.s;
+    const r=[s.info.no,s.info.name,s.info.work,s.info.author,s.status==="submitted"?"제출":"작성 중",s.submittedAt?new Date(s.submittedAt).toLocaleString("ko-KR"):"",s.updatedAt?new Date(s.updatedAt).toLocaleString("ko-KR"):""];
+    reportSections(s).forEach(([h,rs])=>rs.forEach(([k,v])=>{if(!["학번","이름","원작"].includes(k))r.push(v);}));
+    rows.push(r);
+  });
+  const csv="﻿"+[head,...rows].map(r=>r.map(csvCell).join(",")).join("\r\n");
+  const d=new Date();
+  saveTxt(`문학과영상_제출현황_${d.getMonth()+1}월${d.getDate()}일.csv`,csv,"#t-msg");
+});
+
+/* ---------- 초기화 ---------- */
+function refreshAll(){fillFields();renderPersonas();renderChat();renderCompare();renderDebate();updateMeta();updateDots();applyLock();if(currentTab==="submit")renderSubmit();}
+bindFields();
+refreshAll();
+
+(async()=>{
+  [db,user,sample,downloads]=await Promise.all([use("db"),use("user"),use("sample"),use("downloads")]);
+  if(user){
+    try{uid=await user.id();}catch(e){uid=null;}
+    try{isTeacher=!!((await user.canEdit())||(await user.isOwner()));}catch(e){isTeacher=false;}
+  }
+  if(isTeacher && db){$(".tab.teacher").hidden=false;}
+  LS_KEY = LS_BASE+":"+(uid||"anon");
+  try{const raw=localStorage.getItem(LS_KEY);if(raw)S=load(JSON.parse(raw));}catch(e){}
+  if(!sample){showBanner("이 화면에서는 AI 기능을 쓸 수 없어요. claude.ai에 로그인한 상태로 공유받은 링크를 열어 주세요.");}
+  if(db && uid){
+    docRef=db.doc("submissions/"+uid);
+    const timeout=new Promise(r=>setTimeout(()=>r("timeout"),10000));
+    try{
+      const snap=await Promise.race([docRef.get(),timeout]);
+      if(snap==="timeout"){setSaveState("서버 연결 지연 · 잠시 후 새로 고쳐 주세요");docRef=null;}
+      else if(snap.exists){
+        const remote=load(snap.data());
+        // 서버 기록이 더 최신이면 서버 기록 사용
+        if((remote.updatedAt||0)>=(S.updatedAt||0)) S=remote;
+        else dirty=true;
+        setSaveState("저장됨 · "+fmtTime(S.updatedAt));
+      }else{
+        setSaveState("새 기록");
+        if(S.info.no||totalAnswered(S)) dirty=true;
+      }
+    }catch(e){setSaveState("불러오기 실패 · 이 기기에 임시 저장 중");}
+    refreshAll();
+    if(dirty) scheduleSave();
+  }else{
+    setSaveState("이 기기에만 임시 저장됨");
+    if(!db) showBanner("기록을 서버에 저장할 수 없는 화면이에요. claude.ai에 로그인한 뒤 공유받은 링크로 다시 열어 주세요. 그동안 입력한 내용은 이 기기에만 남습니다.");
+  }
+})();
+})();
+</script>
+</body>
+</html>
